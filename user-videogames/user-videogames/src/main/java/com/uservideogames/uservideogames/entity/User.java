@@ -48,6 +48,6 @@ public class User {
     private Date createAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Videogame> videogames = new ArrayList<>(); 
+    private List<UserVideogames> videogames = new ArrayList<>(); 
 
 }

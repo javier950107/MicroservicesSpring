@@ -10,8 +10,8 @@ import com.uservideogames.uservideogames.entity.User;
 public interface UserService {
     
     public User createUser(User user);
-    //public User onAuthUser(String user, String password);
+    public boolean onAuthUser(String user, String password);
     public User getUser(String user);
-    public List<User> findAll();
+    public List<User> findAllUsers();
     //public void createVideogameUser(Videogame videogame);
 }

@@ -37,7 +37,8 @@ public class UserController {
 
             User userInserted = userService.createUser(user);
             if (userInserted == null){
-                return ResponseEntity.badRequest().build();
+                return ResponseEntity.badRequest()
+                    .body(responseFormat.getResponse("User registered with the same user", null));
             }else{
                 return ResponseEntity.ok(responseFormat.getResponse("Success!", null));
             }
@@ -50,7 +51,7 @@ public class UserController {
     @RequestMapping(value = "/users/all", method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getAllUsers(){
         try {
-            List<User> users = userService.findAll();
+            List<User> users = userService.findAllUsers();
             return ResponseEntity.ok(responseFormat.getResponse("Success", users));
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

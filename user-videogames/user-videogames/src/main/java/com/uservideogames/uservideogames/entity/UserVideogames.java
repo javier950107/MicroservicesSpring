@@ -20,14 +20,14 @@ import lombok.NoArgsConstructor;
 @Table(name = "videogames")
 @Data
 @NoArgsConstructor @AllArgsConstructor
-public class Videogame {
+public class UserVideogames {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotEmpty(message = "Error: userName doesn't exists")
-    private String userName;
+    @NotEmpty(message = "Error: game_id doesn't exists")
+    private Long game_id;
 
     @NotEmpty(message = "Error: description doesn't exists")
     private String description;
