@@ -13,5 +13,5 @@ public interface UserService {
     //public User onAuthUser(String user, String password);
     public User getUser(String user);
     public List<User> findAll();
-    //public void createVideogameUser(Videogame videogame);
+    //public void createVideogameUser(Videogame videogame); xD
 }
