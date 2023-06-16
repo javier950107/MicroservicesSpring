@@ -1,6 +1,8 @@
 package com.uservideogames.uservideogames.entity;
 
-import java.sql.Date;
+import java.util.Date;
+
+import org.hibernate.validator.constraints.Range;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,8 +28,9 @@ public class UserVideogames {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotEmpty(message = "Error: game_id doesn't exists")
-    private Long game_id;
+    @Column(name = "game_id")
+    @NotNull(message = "Error: the min number for grade must be 1 and the max must be 10")
+    private Long gameId;
 
     @NotEmpty(message = "Error: description doesn't exists")
     private String description;
@@ -35,12 +38,11 @@ public class UserVideogames {
     @NotEmpty(message = "Error: platform doesn't exists")
     private String platform;
 
-    @NotEmpty(message = "Error: grade doesn't exists")
-    @Size(min = 1, max = 10, message = "Error: the min number for grade must be 1 and the max must be 10")
+    @Range(min = 1, max = 10, message = "Error: the min number for grade must be 1 and the max must be 10")
     private int grade;
 
     @Column(name = "end_date")
-    @NotEmpty(message = "Error: endDate doesn't exists")
+    @NotNull(message = "Error: endDate doesn't exists")
     private Date endDate;
 
     @ManyToOne

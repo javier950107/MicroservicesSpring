@@ -47,7 +47,7 @@ public class User {
     @CreationTimestamp
     private Date createAt;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<UserVideogames> videogames = new ArrayList<>(); 
 
 }
