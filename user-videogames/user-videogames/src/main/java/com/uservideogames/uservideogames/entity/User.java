@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,7 +46,7 @@ public class User {
     @CreationTimestamp
     private Date createAt;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<UserVideogames> videogames = new ArrayList<>(); 
 
 }

@@ -95,6 +95,19 @@ public class UserServicesTest {
         Assertions.assertThat(users).isEmpty();
     }
 
+    @DisplayName("Test onAuthUser")
+    @Test
+    void onAuthTest(){
+        //given
+        when(userRepository.findByUserName(user.getUserName())).thenReturn(user);
+        
+        //when
+        boolean userFound = userService.onAuthUser(user.getUserName(), user.getPassword());
+        
+        //then
+        Assertions.assertThat(userFound).isEqualTo(true);
+    }
+
 }
 
 
