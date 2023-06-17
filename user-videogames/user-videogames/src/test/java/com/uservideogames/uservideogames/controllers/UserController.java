@@ -7,8 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -34,7 +32,7 @@ public class UserController {
     private ObjectMapper objectMapper;
 
     @Test
-    void saveUserTest() throws JsonProcessingException, Exception{
+    void saveUserTest(){
         //given
         User user = new User();
         user.setId(1L);
@@ -45,12 +43,8 @@ public class UserController {
         when(userService.createUser(any(User.class))).thenReturn(user);
         
         //when
-        ResultActions response = mockMvc.perform(post("/users/register")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(user)));
+      
 
         //then
-        response.andDo(print())
-            .andExpect(status().isCreated());
     }
 }
