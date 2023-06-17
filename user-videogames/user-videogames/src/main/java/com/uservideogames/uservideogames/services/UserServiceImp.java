@@ -18,7 +18,7 @@ public class UserServiceImp implements UserService{
         User userFoundByName = userRepository.findByUserName(user.getUserName());
         User userFoundByEmail = userRepository.findByEmail(user.getEmail());
 
-        if (userFoundByName != null && userFoundByEmail != null){
+        if (userFoundByName != null || userFoundByEmail != null){
             return null;
         }
         return userRepository.save(user);
@@ -35,11 +35,11 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public boolean onAuthUser(String user, String password){
-        User userFound = userRepository.findByUserName(user);
+    public boolean onAuthUser(String userName, String password){
+        User userFound = userRepository.findByUserName(userName);
 
         if(userFound != null){
-            if(userFound.getPassword() == password){
+            if(userFound.getPassword().equals(password)){
                 return true;
             }else{
                 return false;

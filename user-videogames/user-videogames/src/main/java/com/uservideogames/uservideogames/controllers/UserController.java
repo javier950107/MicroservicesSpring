@@ -38,7 +38,7 @@ public class UserController {
             User userInserted = userService.createUser(user);
             if (userInserted == null){
                 return ResponseEntity.badRequest()
-                    .body(responseFormat.getResponse("User registered with the same user", null));
+                    .body(responseFormat.getResponse("User registered with the same user or email", null));
             }else{
                 return ResponseEntity.ok(responseFormat.getResponse("Success!", null));
             }

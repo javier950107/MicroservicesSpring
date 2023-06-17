@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 import com.uservideogames.uservideogames.entity.UserVideogames;
 
 @Service
-public interface UserVideogameService {
+public interface UserVideogamesService {
     public UserVideogames insertUserVideogames(UserVideogames userVideogames);
 }

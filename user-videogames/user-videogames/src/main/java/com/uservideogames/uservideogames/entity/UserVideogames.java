@@ -4,8 +4,11 @@ import java.util.Date;
 
 import org.hibernate.validator.constraints.Range;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,7 +48,9 @@ public class UserVideogames {
     @NotNull(message = "Error: endDate doesn't exists")
     private Date endDate;
 
-    @ManyToOne
+    @NotNull(message = "Error: User doesn't exists")
+    @ManyToOne()
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties(value={"createAt", "userName", "email", "password"})
     private User user;
 }
