@@ -118,18 +118,25 @@ public class UserVideogamesControllerTest {
     @Test
     void testWhenUpdateAUser() throws JsonProcessingException, Exception{
         //given
-        userVideogames.setDescription("New Description");
-        when(userVideogamesService.updateUserVideogames(userVideogames)).thenReturn(userVideogames);
+        UserVideogames userVideogamesUpdate = new UserVideogames(
+                1L, 
+                1L, 
+                "test", 
+                "PS5", 
+                6, 
+                new Date(System.currentTimeMillis()), 
+                user);
+        when(userVideogamesService.updateUserVideogames(userVideogamesUpdate)).thenReturn(userVideogamesUpdate);
 
         //when
         ResultActions response = mockMvc.perform(post("/videogames/update")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(userVideogames)));
+            .content(objectMapper.writeValueAsString(userVideogamesUpdate)));
 
         //then
         response.andDo(print())
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.data.description").value("New Description"));
+        .andExpect(jsonPath("$.data.description").value("test"));
     }
 
     @DisplayName("Testing when delete an user videogame")
