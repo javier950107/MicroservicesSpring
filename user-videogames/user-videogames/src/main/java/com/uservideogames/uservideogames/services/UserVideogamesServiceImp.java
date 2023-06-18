@@ -2,6 +2,7 @@ package com.uservideogames.uservideogames.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,9 +43,17 @@ public class UserVideogamesServiceImp implements UserVideogamesService{
 
     @Override
     public List<UserVideogames> getAllVideogamesByUser(Long id) {
-        Optional<User> userFound = userRepository.findById(id);
+        Optional<User> userFound = userRepository.findById(id);//.orElse(n);
         if (userFound.isPresent()){
-            return userVideogameRepository.findByUserId(id);
+            List<UserVideogames> userVideogames = userVideogameRepository.findByUserId(id)
+                .stream()
+                .map(info ->{
+                    Videogame videogameFound = videogameClient.foundVideogameById(info.getGameId());
+                    info.setVideogame(videogameFound);
+                    return info; 
+                })
+                .collect(Collectors.toList());
+            return userVideogames;
         }else{
             return null;
         }

@@ -5,6 +5,7 @@ import java.util.Date;
 import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.uservideogames.uservideogames.models.Videogame;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -49,6 +51,10 @@ public class UserVideogames {
     @NotNull(message = "Error: endDate doesn't exists")
     @Temporal(TemporalType.DATE)
     private Date endDate;
+
+    @Transient
+    @JsonIgnoreProperties(value={"id"})
+    private Videogame videogame;
 
     @NotNull(message = "Error: User doesn't exists")
     @ManyToOne()

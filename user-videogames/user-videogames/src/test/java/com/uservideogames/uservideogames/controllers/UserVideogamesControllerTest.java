@@ -66,7 +66,7 @@ public class UserVideogamesControllerTest {
                 "PS5", 
                 6, 
                 new Date(System.currentTimeMillis()), 
-                user);
+                null, user);
     }
 
     @DisplayName("When insert a user videogame")
@@ -125,6 +125,7 @@ public class UserVideogamesControllerTest {
                 "PS5", 
                 6, 
                 new Date(System.currentTimeMillis()), 
+                null, 
                 user);
         when(userVideogamesService.updateUserVideogames(userVideogamesUpdate)).thenReturn(userVideogamesUpdate);
 
