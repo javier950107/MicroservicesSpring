@@ -1,6 +1,7 @@
 package com.uservideogames.uservideogames.repositories;
 
 import java.util.Date;
+import java.util.List;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +34,7 @@ public class UserVideogamesRepositoryTest {
         user.setPassword("12345");
 
         User userInserted = userRepository.save(user);
+
         userVideogames = new UserVideogames();
         userVideogames.setDescription("Description");
         userVideogames.setEndDate(new Date(System.currentTimeMillis()));
@@ -52,6 +54,20 @@ public class UserVideogamesRepositoryTest {
 
         //then
         Assertions.assertThat(userInserted.getDescription()).isEqualTo("Description");
+    }
+
+    @DisplayName("Get all videogames by user id")
+    @Test
+    void testFindByUserId(){
+        //given
+        UserVideogames userInserted = userVideogamesRepository.save(userVideogames);
+
+        //when
+        List<UserVideogames> videogames = userVideogamesRepository.findByUserId(userInserted.getUser().getId());
+
+        System.out.println(videogames);
+        //then
+        Assertions.assertThat(videogames.get(0).getDescription()).isEqualTo("Description");
     }
 
 }

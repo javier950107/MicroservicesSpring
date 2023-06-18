@@ -1,8 +1,12 @@
 package com.uservideogames.uservideogames.services;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
@@ -38,9 +42,6 @@ public class UserVideogamesServiceTest {
     void setUp(){
         user = new User();
         user.setId(1L);
-        user.setUserName("Test");
-        user.setEmail("test@gmail.com");
-        user.setPassword("12345");
 
         userVideogames = new UserVideogames();
         userVideogames.setDescription("Description");
@@ -77,6 +78,75 @@ public class UserVideogamesServiceTest {
 
         //then
         Assertions.assertThat(userInserted).isEqualTo(null);
+    }
+
+    @DisplayName("Test when show all videogames by user")
+    @Test
+    void showVideogamesByUser(){
+        //given
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userVideogamesRepository.findByUserId(1L)).thenReturn(List.of(userVideogames));
+
+        //when
+        List<UserVideogames> userFound = userVideogamesService.getAllVideogamesByUser(1L);
+
+        //then
+        Assertions.assertThat(userFound.get(0).getDescription()).isEqualTo("Description");
+        Assertions.assertThat(userFound.size()).isGreaterThan(0);
+    }
+
+    @DisplayName("Test when not found user on get all user videogames by id")
+    @Test
+    void getAllUserVideogamesByUser_ThenReturnUserNotFound(){
+        //given
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        //when(userVideogamesRepository.findByUserId(userVideogames.getUser().getId())).thenReturn(List.of(userVideogames));
+
+        //when
+        List<UserVideogames> userFound = userVideogamesService.getAllVideogamesByUser(1L);
+
+        //then
+        Assertions.assertThat(userFound).isNull();
+    }
+
+    @DisplayName("Test when delete an user videogames")
+    @Test
+    void deleteUserVideogames(){
+        //given
+        doNothing().when(userVideogamesRepository).deleteById(userVideogames.getId());
+
+        // when
+        userVideogamesService.deleteById(userVideogames);
+
+        //then
+        verify(userVideogamesRepository, times(1)).deleteById(userVideogames.getId());
+    }
+
+    @DisplayName("Test when update an user videogames")
+    @Test
+    void updateUserVideogames(){
+        //given
+        when(userVideogamesRepository.findById(userVideogames.getId())).thenReturn(Optional.of(userVideogames));
+        when(userVideogamesRepository.save(userVideogames)).thenReturn(userVideogames);
+        userVideogames.setDescription("New Description");
+
+        //when
+        UserVideogames updatedUser = userVideogamesService.updateUserVideogames(userVideogames);
+
+        //then
+        Assertions.assertThat(updatedUser.getDescription()).isEqualTo("New Description");
+    }
+
+    @DisplayName("Test when update a wrong user")
+    @Test
+    void updateWrongUser_ThenReturnNull(){
+        when(userVideogamesRepository.findById(userVideogames.getId())).thenReturn(Optional.empty());
+
+        //when
+        UserVideogames updatedUser = userVideogamesService.updateUserVideogames(userVideogames);
+
+        //then
+        Assertions.assertThat(updatedUser).isEqualTo(null);
     }
 
 

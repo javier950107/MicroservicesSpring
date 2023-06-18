@@ -1,5 +1,6 @@
 package com.uservideogames.uservideogames.controllers;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -8,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,6 +43,7 @@ public class UserVideogamesControllerTest {
 
     private User user;
     private UserVideogames userVideogames;
+    private UserVideogames userVideogames2;
 
     @BeforeEach
     void setUp(){
@@ -55,6 +58,15 @@ public class UserVideogamesControllerTest {
         userVideogames.setId(1L);
         userVideogames.setPlatform("Switch");
         userVideogames.setUser(user);
+    
+        userVideogames2 = new UserVideogames(
+                2L, 
+                1L, 
+                "test", 
+                "PS5", 
+                6, 
+                new Date(System.currentTimeMillis()), 
+                user);
     }
 
     @DisplayName("When insert a user videogame")
@@ -70,7 +82,70 @@ public class UserVideogamesControllerTest {
 
         //then
         response.andDo(print()).andExpect(status().isOk());
+    }
+
+    @DisplayName("Testing when you found all videogames by user")
+    @Test
+    void findVideogamesByUserIdTest() throws JsonProcessingException, Exception{
+        //given
+        when(userVideogamesService.getAllVideogamesByUser(1L)).thenReturn(List.of(userVideogames, userVideogames2));
+
+        // when
+        ResultActions response = mockMvc.perform(get("/videogames/all/1")
+            .contentType(MediaType.APPLICATION_JSON));
+            //.content(objectMapper.writeValueAsString(userVideogames)));
+
+        //then
+        response.andDo(print()).andExpect(status().isOk());
             
+    }
+
+    @DisplayName("Testing when the user doesn't exists")
+    @Test
+    void findVideogameByUserDoenstExists() throws Exception{
+        //given
+        when(userVideogamesService.getAllVideogamesByUser(3L)).thenReturn(null);
+
+        // when
+        ResultActions response = mockMvc.perform(get("/videogames/all/3")
+            .contentType(MediaType.APPLICATION_JSON));
+
+        //then
+        response.andDo(print()).andExpect(status().isBadRequest());
+    }
+
+    @DisplayName("Testing when update user videogames")
+    @Test
+    void testWhenUpdateAUser() throws JsonProcessingException, Exception{
+        //given
+        userVideogames.setDescription("New Description");
+        when(userVideogamesService.updateUserVideogames(userVideogames)).thenReturn(userVideogames);
+
+        //when
+        ResultActions response = mockMvc.perform(post("/videogames/update")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(userVideogames)));
+
+        //then
+        response.andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.data.description").value("New Description"));
+    }
+
+    @DisplayName("Testing when delete an user videogame")
+    @Test
+    void testWhenDeleteAndVideogameUserController() throws Exception{
+        //given
+        doNothing().when(userVideogamesService).deleteById(userVideogames);
+
+        //when
+        ResultActions response = mockMvc.perform(post("/videogames/delete")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(userVideogames)));
+
+        //then
+        response.andDo(print())
+            .andExpect(status().isOk());
     }
 
 }
