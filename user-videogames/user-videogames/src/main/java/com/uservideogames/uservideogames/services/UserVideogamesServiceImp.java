@@ -1,33 +1,45 @@
 package com.uservideogames.uservideogames.services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.uservideogames.uservideogames.entity.User;
-import com.uservideogames.uservideogames.entity.UserVideogames;
+import com.uservideogames.uservideogames.clients.VideogameClient;
+import com.uservideogames.uservideogames.entities.User;
+import com.uservideogames.uservideogames.entities.UserVideogames;
+import com.uservideogames.uservideogames.models.Videogame;
 import com.uservideogames.uservideogames.repositories.UserRepository;
 import com.uservideogames.uservideogames.repositories.UserVideogamesRepository;
+
 
 @Service
 public class UserVideogamesServiceImp implements UserVideogamesService{
 
     @Autowired
-    UserVideogamesRepository userVideogameRepository;
+    private UserVideogamesRepository userVideogameRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private VideogameClient videogameClient;
 
     @Override
     public UserVideogames insertUserVideogames(UserVideogames userVideogames) {
         Optional<User> userFound = userRepository.findById(userVideogames.getUser().getId());
-        if(userFound.isPresent()){
-            return userVideogameRepository.save(userVideogames);    
-        }else{
-            return null;
+        Videogame videogameFound = videogameClient.foundVideogameById(userVideogames.getGameId());
+        
+        if(userFound.isPresent() && videogameFound != null){
+            if(videogameFound.getId().equals(userVideogames.getGameId())){
+                return userVideogameRepository.save(userVideogames);
+            }
+            return null;      
         }
+        return null;
     }
 
     @Override

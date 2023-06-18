@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.uservideogames.uservideogames.entity.User;
+import com.uservideogames.uservideogames.entities.User;
 import com.uservideogames.uservideogames.services.UserService;
 import com.uservideogames.uservideogames.utils.ResponseFormat;
 

@@ -1,4 +1,4 @@
-package com.uservideogames.uservideogames.entity;
+package com.uservideogames.uservideogames.entities;
 
 import java.sql.Date;
 

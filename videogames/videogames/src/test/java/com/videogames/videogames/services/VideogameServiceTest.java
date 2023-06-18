@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.videogames.videogames.entity.Videogame;
+import com.videogames.videogames.entities.Videogame;
 import com.videogames.videogames.repositories.VideogameRepository;
 
 @ExtendWith(MockitoExtension.class)

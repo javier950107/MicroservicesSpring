@@ -24,8 +24,8 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.uservideogames.uservideogames.entity.User;
-import com.uservideogames.uservideogames.entity.UserVideogames;
+import com.uservideogames.uservideogames.entities.User;
+import com.uservideogames.uservideogames.entities.UserVideogames;
 import com.uservideogames.uservideogames.services.UserVideogamesService;
 
 @AutoConfigureMockMvc

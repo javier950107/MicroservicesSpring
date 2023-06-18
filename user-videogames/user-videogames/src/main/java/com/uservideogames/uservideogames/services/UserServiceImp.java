@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.uservideogames.uservideogames.entity.User;
+import com.uservideogames.uservideogames.entities.User;
 import com.uservideogames.uservideogames.repositories.UserRepository;
 
 @Service

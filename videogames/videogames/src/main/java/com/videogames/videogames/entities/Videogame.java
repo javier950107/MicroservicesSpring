@@ -1,4 +1,4 @@
-package com.videogames.videogames.entity;
+package com.videogames.videogames.entities;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.persistence.Column;

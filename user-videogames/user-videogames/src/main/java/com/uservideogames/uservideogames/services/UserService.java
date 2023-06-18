@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.uservideogames.uservideogames.entity.User;
+import com.uservideogames.uservideogames.entities.User;
 
 @Service
 public interface UserService {

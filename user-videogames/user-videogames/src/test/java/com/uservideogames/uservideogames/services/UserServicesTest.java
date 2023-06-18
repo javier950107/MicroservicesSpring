@@ -14,8 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
-import com.uservideogames.uservideogames.entity.User;
+import com.uservideogames.uservideogames.entities.User;
 import com.uservideogames.uservideogames.repositories.UserRepository;
 
 @ExtendWith(MockitoExtension.class)

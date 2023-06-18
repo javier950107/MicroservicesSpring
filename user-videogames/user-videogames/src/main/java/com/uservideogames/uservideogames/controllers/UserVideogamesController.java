@@ -3,7 +3,7 @@ package com.uservideogames.uservideogames.controllers;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.uservideogames.uservideogames.entity.UserVideogames;
+import com.uservideogames.uservideogames.entities.UserVideogames;
 import com.uservideogames.uservideogames.services.UserVideogamesService;
 import com.uservideogames.uservideogames.utils.ResponseFormat;
 
@@ -32,9 +32,8 @@ public class UserVideogamesController {
     private ResponseFormat responseFormat;
     
     @RequestMapping(value="/user/videogames/insert", method=RequestMethod.POST)
-    public ResponseEntity<Map<String,Object>> requestMethodName(@Valid @RequestBody UserVideogames userVideogames, BindingResult result) {
+    public ResponseEntity<Map<String,Object>> insertUserVideogames(@Valid @RequestBody UserVideogames userVideogames, BindingResult result) {
         try {
-
             if(result.hasErrors()){
                 return ResponseEntity.badRequest().body(responseFormat.handleErrors(result));
             }
@@ -43,10 +42,11 @@ public class UserVideogamesController {
             if (userInserted != null){
                 return ResponseEntity.ok().body(responseFormat.getResponse("Success", null));
             }else{
-                return ResponseEntity.badRequest().body(responseFormat.getResponse("Error: User doesn't exists", null));
+                return ResponseEntity.badRequest().body(responseFormat.getResponse("Error: User or videogame doesn't exists", null));
             }
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }

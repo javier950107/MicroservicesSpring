@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.videogames.videogames.entity.Videogame;
+import com.videogames.videogames.entities.Videogame;
 import com.videogames.videogames.repositories.VideogameRepository;
 
 @Service
@@ -30,8 +30,8 @@ public class VideogameServiceImp implements VideogameService{
     }
 
     @Override
-    public Videogame getVideogameById(Videogame videogame) {
-        Optional<Videogame> found = videogameRepository.findById(videogame.getId());
+    public Videogame getVideogameById(Long id) {
+        Optional<Videogame> found = videogameRepository.findById(id);
         if(found.isPresent()){
             return found.get();
         }else{
