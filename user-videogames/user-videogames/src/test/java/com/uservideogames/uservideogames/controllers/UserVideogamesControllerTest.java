@@ -76,7 +76,7 @@ public class UserVideogamesControllerTest {
         when(userVideogamesService.insertUserVideogames(userVideogames)).thenReturn(userVideogames);
 
         //when
-        ResultActions response = mockMvc.perform(post("/videogames/insert")
+        ResultActions response = mockMvc.perform(post("/user/videogames/insert")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(userVideogames)));
 
@@ -91,7 +91,7 @@ public class UserVideogamesControllerTest {
         when(userVideogamesService.getAllVideogamesByUser(1L)).thenReturn(List.of(userVideogames, userVideogames2));
 
         // when
-        ResultActions response = mockMvc.perform(get("/videogames/all/1")
+        ResultActions response = mockMvc.perform(get("/user/videogames/all/1")
             .contentType(MediaType.APPLICATION_JSON));
             //.content(objectMapper.writeValueAsString(userVideogames)));
 
@@ -107,7 +107,7 @@ public class UserVideogamesControllerTest {
         when(userVideogamesService.getAllVideogamesByUser(3L)).thenReturn(null);
 
         // when
-        ResultActions response = mockMvc.perform(get("/videogames/all/3")
+        ResultActions response = mockMvc.perform(get("/user/videogames/all/3")
             .contentType(MediaType.APPLICATION_JSON));
 
         //then
@@ -129,7 +129,7 @@ public class UserVideogamesControllerTest {
         when(userVideogamesService.updateUserVideogames(userVideogamesUpdate)).thenReturn(userVideogamesUpdate);
 
         //when
-        ResultActions response = mockMvc.perform(post("/videogames/update")
+        ResultActions response = mockMvc.perform(post("/user/videogames/update")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(userVideogamesUpdate)));
 
@@ -146,7 +146,7 @@ public class UserVideogamesControllerTest {
         doNothing().when(userVideogamesService).deleteById(userVideogames);
 
         //when
-        ResultActions response = mockMvc.perform(post("/videogames/delete")
+        ResultActions response = mockMvc.perform(post("/user/videogames/delete")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(userVideogames)));
 

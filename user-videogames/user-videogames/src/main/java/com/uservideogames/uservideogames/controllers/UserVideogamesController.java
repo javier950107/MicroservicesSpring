@@ -31,7 +31,7 @@ public class UserVideogamesController {
     @Autowired
     private ResponseFormat responseFormat;
     
-    @RequestMapping(value="/videogames/insert", method=RequestMethod.POST)
+    @RequestMapping(value="/user/videogames/insert", method=RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> requestMethodName(@Valid @RequestBody UserVideogames userVideogames, BindingResult result) {
         try {
 
@@ -51,7 +51,7 @@ public class UserVideogamesController {
         }
     }
 
-    @RequestMapping(value = "/videogames/all/{id}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/user/videogames/all/{id}" , method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getVideogamesByUser(@PathVariable("id") Long id){
         try {
             List<UserVideogames> videogamesFound = userVideogamesService.getAllVideogamesByUser(id);
@@ -65,7 +65,7 @@ public class UserVideogamesController {
         }
     }
 
-    @RequestMapping(value = "/videogames/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/videogames/delete", method = RequestMethod.POST)
     public ResponseEntity<?> deleteUserVideogame(@RequestBody UserVideogames userVideogames){
         try {
             userVideogamesService.deleteById(userVideogames);
@@ -75,7 +75,7 @@ public class UserVideogamesController {
         }
     }
 
-    @RequestMapping(value = "/videogames/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/videogames/update", method = RequestMethod.POST)
     public ResponseEntity<?> updateUserVideogames(@RequestBody UserVideogames userVideogames ,@Valid BindingResult result ){
         try {
 
