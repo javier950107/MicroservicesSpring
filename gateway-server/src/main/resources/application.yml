@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: user-videogames
+        uri: lb://user-videogames
+        predicates:
+            - Path=/api/user/**
+        filters:
+            - StripPrefix=2
+      - id: videogames
+        uri: lb://videogames
+        predicates:
+            - Path=/api/videogames/**
+        filters:
+            - StripPrefix=2
