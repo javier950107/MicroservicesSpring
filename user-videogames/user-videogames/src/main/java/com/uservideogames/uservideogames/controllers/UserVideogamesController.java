@@ -3,6 +3,7 @@ package com.uservideogames.uservideogames.controllers;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.uservideogames.uservideogames.clients.VideogameAlternativeFallback;
 import com.uservideogames.uservideogames.entities.UserVideogames;
 import com.uservideogames.uservideogames.services.UserVideogamesService;
 import com.uservideogames.uservideogames.utils.ResponseFormat;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -26,7 +28,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserVideogamesController {
 
     @Autowired
+    private CircuitBreakerFactory<?,?> circuitBreakerFactory;
+
+    @Autowired
     private UserVideogamesService userVideogamesService;
+
+    @Autowired
+    private VideogameAlternativeFallback videogameAlternativeFallback;
 
     @Autowired
     private ResponseFormat responseFormat;
@@ -38,7 +46,10 @@ public class UserVideogamesController {
                 return ResponseEntity.badRequest().body(responseFormat.handleErrors(result));
             }
 
-            UserVideogames userInserted = userVideogamesService.insertUserVideogames(userVideogames);
+            UserVideogames userInserted = circuitBreakerFactory.create("videogames")
+                .run(
+                    ()->userVideogamesService.insertUserVideogames(userVideogames), 
+                    e -> videogameAlternativeFallback.alternativeInsertVideogame(userVideogames));
             if (userInserted != null){
                 return ResponseEntity.ok().body(responseFormat.getResponse("Success", null));
             }else{
@@ -54,7 +65,9 @@ public class UserVideogamesController {
     @RequestMapping(value = "/videogames/all/{id}" , method = RequestMethod.GET)
     public ResponseEntity<Map<String,Object>> getVideogamesByUser(@PathVariable("id") Long id){
         try {
-            List<UserVideogames> videogamesFound = userVideogamesService.getAllVideogamesByUser(id);
+            List<UserVideogames> videogamesFound = circuitBreakerFactory.create("videogames")
+                .run(()-> userVideogamesService.getAllVideogamesByUser(id), e -> videogameAlternativeFallback.alternativeVideogameInfo(id, e));
+            
             if(videogamesFound != null){
                 return ResponseEntity.ok(responseFormat.getResponse("Success", videogamesFound));
             }else{
@@ -75,7 +88,7 @@ public class UserVideogamesController {
         }
     }
 
-    @RequestMapping(value = "/videogames/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/videogames/update", method = RequestMethod.PUT)
     public ResponseEntity<?> updateUserVideogames(@RequestBody UserVideogames userVideogames ,@Valid BindingResult result ){
         try {
 

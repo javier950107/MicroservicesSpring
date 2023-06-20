@@ -2,6 +2,7 @@ package com.videogames.videogames.controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,9 +73,18 @@ public class VideogameController {
         }
     }
 
+    // this is for communication
     @RequestMapping(value = "/find/{id}", method = RequestMethod.POST)
     public Videogame foundVideogameById(@PathVariable Long id){
         try {
+            /*if (id.equals(10L)){
+                throw new IllegalStateException("Not found");
+            }
+
+            if(id.equals(7L)){
+                TimeUnit.SECONDS.sleep(5L);
+            }*/
+
             Videogame found = videogameService.getVideogameById(id);
             if (found!= null){
                 return found;
