@@ -10,7 +10,7 @@ import com.uservideogames.uservideogames.entities.User;
 public interface UserService {
     
     public User createUser(User user);
-    public boolean onAuthUser(String user, String password);
+    public User onAuthUser(String user, String password);
     public User getUser(String user);
     public List<User> findAllUsers();
     //public void createVideogameUser(Videogame videogame);

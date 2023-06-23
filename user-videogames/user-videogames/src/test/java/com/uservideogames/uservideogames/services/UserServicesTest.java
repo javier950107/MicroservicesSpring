@@ -13,9 +13,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.uservideogames.uservideogames.entities.User;
 import com.uservideogames.uservideogames.repositories.UserRepository;
+import com.uservideogames.uservideogames.utils.JWTUtil;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServicesTest {
@@ -25,6 +27,7 @@ public class UserServicesTest {
     
     @InjectMocks
     private UserServiceImp userService;
+
 
     private User user;
 
@@ -101,10 +104,10 @@ public class UserServicesTest {
         when(userRepository.findByUserName(user.getUserName())).thenReturn(user);
         
         //when
-        boolean userFound = userService.onAuthUser(user.getUserName(), user.getPassword());
+        User userFound = userService.onAuthUser(user.getUserName(), user.getPassword());
         
         //then
-        Assertions.assertThat(userFound).isEqualTo(true);
+        Assertions.assertThat(userFound).isEqualTo(user.getUserName());
     }
 
 }

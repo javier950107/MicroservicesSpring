@@ -20,8 +20,10 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.infix.lang.infix.antlr.EventFilterParser.predicate_return;
 import com.uservideogames.uservideogames.entities.User;
 import com.uservideogames.uservideogames.services.UserService;
+import com.uservideogames.uservideogames.utils.JWTUtil;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -87,7 +89,7 @@ public class UserControllerTest {
     @Test
     void onAuthUserTest_ThenReturnAccess() throws JsonProcessingException, Exception{
         //given
-        when(userService.onAuthUser(user.getUserName(), user.getPassword())).thenReturn(true);
+        when(userService.onAuthUser(user.getUserName(), user.getPassword())).thenReturn(user);
 
         //when
         ResultActions response = mockMvc.perform(post("/login")
@@ -107,7 +109,7 @@ public class UserControllerTest {
         userInvalid.setUserName("test");
         userInvalid.setPassword("3");
 
-        when(userService.onAuthUser(userInvalid.getUserName(), userInvalid.getPassword())).thenReturn(false);
+        when(userService.onAuthUser(userInvalid.getUserName(), userInvalid.getPassword())).thenReturn(null);
 
         //when
         ResultActions response = mockMvc.perform(post("/login")

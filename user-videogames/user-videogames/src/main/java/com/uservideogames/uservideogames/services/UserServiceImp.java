@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.uservideogames.uservideogames.entities.User;
 import com.uservideogames.uservideogames.repositories.UserRepository;
+import com.uservideogames.uservideogames.utils.JWTUtil;
 
 @Service
 public class UserServiceImp implements UserService{
@@ -35,17 +36,17 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    public boolean onAuthUser(String userName, String password){
+    public User onAuthUser(String userName, String password){
         User userFound = userRepository.findByUserName(userName);
 
         if(userFound != null){
             if(userFound.getPassword().equals(password)){
-                return true;
+                return userFound;
             }else{
-                return false;
+                return null;
             }
         }else{
-            return false;
+            return null;
         }
     }
     
