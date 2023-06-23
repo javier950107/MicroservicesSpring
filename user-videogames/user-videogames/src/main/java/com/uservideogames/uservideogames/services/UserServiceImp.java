@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.uservideogames.uservideogames.entities.User;
 import com.uservideogames.uservideogames.repositories.UserRepository;
-import com.uservideogames.uservideogames.utils.JWTUtil;
 
 @Service
 public class UserServiceImp implements UserService{

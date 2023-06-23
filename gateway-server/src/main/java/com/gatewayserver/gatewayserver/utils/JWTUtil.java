@@ -1,10 +1,8 @@
 package com.gatewayserver.gatewayserver.utils;
 
-import java.security.Key;
 import java.util.Date;
 
 import javax.xml.bind.DatatypeConverter;
-import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

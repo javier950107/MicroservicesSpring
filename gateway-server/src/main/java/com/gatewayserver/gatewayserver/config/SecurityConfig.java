@@ -22,8 +22,11 @@ public class SecurityConfig {
     public RouteLocator routes(RouteLocatorBuilder builder){
         return builder.routes()
         .route("videogames", r-> r.path("/api/videogames/**")
-            .filters(f -> f.filter(filter))
+            .filters(f -> f.filter(filter).stripPrefix(2))
             .uri("lb://videogames"))
+        .route("user-videogames", r->r.path("/api/user/**")
+            .filters(f -> f.filter(filter).stripPrefix(2))
+            .uri("lb://user-videogames"))
         .build();
     }
 
