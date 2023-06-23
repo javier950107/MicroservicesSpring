@@ -19,6 +19,7 @@ import com.uservideogames.uservideogames.services.UserService;
 import com.uservideogames.uservideogames.utils.JWTUtil;
 import com.uservideogames.uservideogames.utils.ResponseFormat;
 
+import brave.Tracer;
 import jakarta.validation.Valid;
 
 @RefreshScope
@@ -32,6 +33,9 @@ public class UserController {
 
     @Autowired
     private JWTUtil jwt;
+
+    @Autowired
+    private Tracer tracer;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> insertUser(@Valid @RequestBody User user, BindingResult result){
@@ -77,6 +81,8 @@ public class UserController {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            //current tags
+            tracer.currentSpan().tag("Error get all", e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
