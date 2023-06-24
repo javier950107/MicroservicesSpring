@@ -54,6 +54,7 @@ public class UserController {
             }
             
         } catch (Exception err) {
+            tracer.currentSpan().tag("Error register", err.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, err.getMessage());
         }
     }
@@ -64,6 +65,7 @@ public class UserController {
             List<User> users = userService.findAllUsers();
             return ResponseEntity.ok(responseFormat.getResponse("Success", users));
         } catch (Exception e) {
+            tracer.currentSpan().tag("Error get all", e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }

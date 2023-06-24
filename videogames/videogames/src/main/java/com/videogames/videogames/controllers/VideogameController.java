@@ -19,11 +19,15 @@ import com.videogames.videogames.entities.Videogame;
 import com.videogames.videogames.services.VideogameService;
 import com.videogames.videogames.utils.ResponseFormat;
 
+import brave.Tracer;
 import jakarta.validation.Valid;
 
 @RefreshScope
 @RestController
 public class VideogameController {
+
+    @Autowired
+    private Tracer tracer;
 
     @Autowired
     private VideogameService videogameService;
@@ -45,7 +49,7 @@ public class VideogameController {
                 return ResponseEntity.badRequest().body(responseFormat.getResponse("Error: Videogame exists", null));
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            tracer.currentSpan().tag("Error insert", e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
         }
     }
@@ -56,6 +60,7 @@ public class VideogameController {
             List<Videogame> videogames = videogameService.getAllVideogame();
             return ResponseEntity.ok(responseFormat.getResponse("Success", videogames));
         } catch (Exception e) {
+            tracer.currentSpan().tag("Error get all", e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
@@ -70,6 +75,7 @@ public class VideogameController {
                 return ResponseEntity.badRequest().body(responseFormat.getResponse("Error: Videogame doesn't exists", null));
             }
         } catch (Exception e) {
+            tracer.currentSpan().tag("Error get by id", e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
@@ -93,6 +99,7 @@ public class VideogameController {
                 return null;
             }
         } catch (Exception e) {
+            tracer.currentSpan().tag("Error find by id", e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
