@@ -48,7 +48,7 @@ services:
     restart: always
     networks:
       - springcloud
-    depends_on: 
+    depends_on:
       - config-server
       - eureka-server
       - mysql
@@ -63,7 +63,6 @@ services:
     depends_on: 
       - config-server
       - eureka-server
-      - user-videogames
       - postgres
 
   gateway-server:
@@ -89,8 +88,8 @@ services:
     networks:
       - springcloud
   
-  zipkin-server:
-    image: zipkin-server:v1
+  zipkin:
+    image: zipkin:v1
     ports:
       - "9411:9411"
     restart: always
@@ -99,12 +98,15 @@ services:
     depends_on:
       - mysql
       - rabbitmq
+      - user-videogames
+      - videogames
     environment:
       RABBIT_ADDRESSES: microservice-rabbitmq:5672
       STORAGE_TYPE: mysql
       MYSQL_USER: zipkin
-      MYSQL_PASS: zipkin
+      MYSQL_PASS: 
       MYSQL_DB: zipkin
+      MYSQL_HOST: microservices-mysql
 
 networks:
   springcloud:
