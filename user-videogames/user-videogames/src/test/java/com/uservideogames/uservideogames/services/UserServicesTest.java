@@ -107,7 +107,7 @@ public class UserServicesTest {
         User userFound = userService.onAuthUser(user.getUserName(), user.getPassword());
         
         //then
-        Assertions.assertThat(userFound).isEqualTo(user.getUserName());
+        Assertions.assertThat(userFound).isEqualTo(user);
     }
 
 }
