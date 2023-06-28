@@ -1,8 +1,29 @@
 
-# Spring Microservice
+# Spring Microservice Backend
+ 
+This is a microservices you can create users, you can manage the login for the users, create
+a relantion between user and videogame, you can update, delete and check the users, 
+you can create the videogame list, find the videogames.
 
-Microservices with spring boot java 3.1.0.
+In this backend you can make manage the login and register for an user, create the videogame
+for make a relation between user and videogame, the main point for this is register the videogames
+that you ended in a certain date by platform and giving a little description of you experience.
 
+
+## Technologies
+
+- Java 17
+- Spring boot, versión 3.1.0
+- Eureka Server
+- Config Server
+- Resilience4j - Circuit Breaker
+- Gateway server
+- Feign - Commucation between microservices
+- JWT - Tokens
+- ORM
+- RabbitMQ
+- Zipkin
+- Docker
 
 
 
