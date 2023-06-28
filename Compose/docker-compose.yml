@@ -21,7 +21,7 @@ services:
     container_name: microservices-mysql
     image: mysql:8
     ports:
-      - "3307:3306"
+      - "3306:3306"
     restart: always
     networks:
       - springcloud
