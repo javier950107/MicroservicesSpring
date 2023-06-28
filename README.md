@@ -25,6 +25,21 @@ that you ended in a certain date by platform and giving a little description of 
 - Zipkin
 - Docker
 
+## Commands for create container
+
+- Create .jar
+
+```
+.\mvnw clean package -DskipTests
+```
+
+- Create docker image
+
+```
+docker build -t <name>:<version> .
+``` 
+
+- Run docker-compose for deploy
 
 
 ## Routes API
